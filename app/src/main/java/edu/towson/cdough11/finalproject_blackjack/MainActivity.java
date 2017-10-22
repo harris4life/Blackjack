@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void launchStartGameActivity() {
-        Intent intent = new Intent(getBaseContext(), NewGameActivity.class);
+        Intent intent = new Intent(getBaseContext(), SetBetActivity.class);
         startActivityForResult(intent, START_GAME_REQUEST_CODE);
     }
 }
