@@ -1,4 +1,4 @@
-package edu.towson.cosc431.austinfarr.lab2.database;
+package edu.towson.cdough11.finalproject_blackjack.database;
 
 import android.provider.BaseColumns;
 
@@ -8,9 +8,7 @@ import android.provider.BaseColumns;
 
 public class DatabaseContract implements BaseColumns {
 
-    public static final String TABLE_NAME = "Song";
-    public static final String TITLE_COLUMN_NAME = "Title";
-    public static final String IS_AWESOME_COLUMN_NAME = "IsAwesome";
-    public static final String TRACK_NUMBER_COLUMN_NAME = "Track";
-    public static final String ARTIST_COLUMN_NAME = "Artist";
+    public static final String PLAYER_TABLE_NAME = "Player";
+    public static final String MONEY_COLUMN_NAME = "Money";
+    public static final String PLAYER_NAME_COLUMN_NAME = "Name";
 }

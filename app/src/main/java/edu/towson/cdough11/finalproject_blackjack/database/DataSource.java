@@ -1,8 +1,6 @@
-package edu.towson.cosc431.austinfarr.lab2.database;
+package edu.towson.cdough11.finalproject_blackjack.database;
 
 import java.util.List;
-
-import models.Song;
 
 /**
  * Created by Sips Tea on 11/6/2017.
@@ -10,10 +8,10 @@ import models.Song;
 
 public interface DataSource {
 
-    List<Song> getAllSongs();
-    Song getSong(String name);
-    void deleteSong(Song song);
-    void addSong(Song song);
-    void updateSong(Song originalSong, Song song);
+    List<Profile> getAllProfiles();
+    Profile getProfile(String name);
+    void deleteProfile(Profile profile);
+    void addProfile(Profile profile);
+    void updateProfile(Profile originalProfile, Profile profile);
 
 }

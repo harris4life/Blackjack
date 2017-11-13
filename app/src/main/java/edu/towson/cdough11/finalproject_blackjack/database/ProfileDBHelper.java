@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Sips Tea on 10/30/2017.
  */
 
-public class PlayerDBHelper extends SQLiteOpenHelper {
+public class ProfileDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "songs.db";
     private static final int DB_VERSION = 1;
@@ -16,9 +16,9 @@ public class PlayerDBHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE = "CREATE TABLE " + DatabaseContract.PLAYER_TABLE_NAME + " (" +
             DatabaseContract._ID + "INTEGER PRIMARY KEY, " +
             DatabaseContract.PLAYER_NAME_COLUMN_NAME + " TEXT, " +
-            DatabaseContract.MONEY_COLUMN_NAME + " TEXT);";
+            DatabaseContract.MONEY_COLUMN_NAME + " INTEGER);";
 
-    public PlayerDBHelper(Context context) {
+    public ProfileDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DB_VERSION);
     }
 
