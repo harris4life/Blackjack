@@ -31,11 +31,12 @@ import edu.towson.cdough11.finalproject_blackjack.Models.Card;
 
         @Override
         public void onBindViewHolder(CardViewHolder holder, int position) {
-
+            Card card = cards.get(position);
+            holder.bindCard(card);
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return cards.size();
         }
     }

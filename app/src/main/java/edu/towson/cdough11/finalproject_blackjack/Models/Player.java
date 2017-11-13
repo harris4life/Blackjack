@@ -21,6 +21,7 @@ public class Player implements IParticipant {
     @Override
     public void hit(Card card) {
         draw(card);
+        int sum = getHandSum();
         if(getHandSum() == 21)
             stay();
         else if(getHandSum() > 21)
@@ -35,7 +36,7 @@ public class Player implements IParticipant {
 
     @Override
     public void draw(Card card) {
-
+        hand.add(card);
     }
 
     @Override
@@ -82,7 +83,19 @@ public class Player implements IParticipant {
             possibleSums.add(sumOfConstants + 44);
         }
 
-        return getClosestSumTo21(possibleSums);
+        boolean allGreaterThan21 = true;
+        boolean has21 = false;
+        for(Integer i: possibleSums){
+            if(i < 21)
+                allGreaterThan21 = false;
+            if(i == 21)
+                return 21;
+        }
+
+        if(allGreaterThan21)
+            return possibleSums.get(0);
+        else
+            return getClosestSumTo21(possibleSums);
     }
 
     private int getClosestSumTo21(List<Integer> possibleSums) {

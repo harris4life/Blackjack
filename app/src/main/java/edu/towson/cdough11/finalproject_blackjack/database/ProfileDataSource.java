@@ -63,13 +63,17 @@ public class ProfileDataSource implements DataSource{
         cursor.moveToNext();
         Profile profile = new Profile();
         int money = cursor.getInt(cursor.getColumnIndex(DatabaseContract.MONEY_COLUMN_NAME));
-        String name = cursor.getString(cursor.getColumnIndex(DatabaseContract.PLAYER_NAME_COLUMN_NAME));
+        String pName = cursor.getString(cursor.getColumnIndex(DatabaseContract.PLAYER_NAME_COLUMN_NAME));
         profile.setMoney(money);
-        profile.setName(name);
+        profile.setName(pName);
         return profile;
     }
 
     public void updateProfile(Profile originalProfile, Profile profile){
+        return;
+    }
+
+    /*public void updateProfile(Profile originalProfile, Profile profile){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int isAwesome = profile.isAwesome() ? 1:0;
         int isAwesomeOriginal = originalProfile.isAwesome() ? 1:0;
@@ -83,5 +87,5 @@ public class ProfileDataSource implements DataSource{
                 DatabaseContract.ARTIST_COLUMN_NAME + " = '" + originalProfile.getArtist() + "' AND " +
                 DatabaseContract.PLAYER_NAME_COLUMN_NAME + " = '" + originalProfile.getTrack() + "' AND " +
                 DatabaseContract.IS_AWESOME_COLUMN_NAME + " = " + isAwesomeOriginal + ";");
-    }
+    }*/
 }

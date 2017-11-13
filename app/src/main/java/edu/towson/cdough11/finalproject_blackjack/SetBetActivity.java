@@ -39,7 +39,7 @@ public class SetBetActivity extends AppCompatActivity {
 
 
     private void launchGameActivity() {
-        Intent intent = new Intent(getBaseContext(), Game.class);
+        Intent intent = new Intent(getBaseContext(), GameActivity.class);
         startActivity(intent);
     }
 

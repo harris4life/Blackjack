@@ -1,10 +1,16 @@
 package edu.towson.cdough11.finalproject_blackjack.Models;
 
+import java.util.List;
+
+import edu.towson.cdough11.finalproject_blackjack.IPresenter;
+
 /**
  * Created by Sips Tea on 10/22/2017.
  */
 
 public class Game implements IModel {
+
+    IPresenter presenter;
 
     Player player;
     Dealer dealer;
@@ -45,7 +51,8 @@ public class Game implements IModel {
 
     @Override
     public void playerWin(boolean blackjack) {
-
+        if(blackjack)
+            presenter.showFinalSum(21, true);
     }
 
     @Override
@@ -59,7 +66,46 @@ public class Game implements IModel {
     }
 
     @Override
+    public int dealerStay() {
+        return 0;
+    }
+
+    @Override
+    public void dealerBust() {
+        dealerStay();
+    }
+
+    @Override
     public void playerHit() {
         player.hit(deck.draw());
+        if(player.busted())
+            playerBust();
+    }
+
+    @Override
+    public int playerStay() {
+        player.stay();
+        return player.finalSum;
+    }
+
+    @Override
+    public void playerBust() {
+        presenter.stay();
+    }
+
+
+    @Override
+    public List<Card> getPlayerHand() {
+        return player.hand;
+    }
+
+    @Override
+    public List<Card> getDealerHand() {
+        return dealer.hand;
+    }
+
+    @Override
+    public void setPresenter(IPresenter presenter) {
+        this.presenter= presenter;
     }
 }

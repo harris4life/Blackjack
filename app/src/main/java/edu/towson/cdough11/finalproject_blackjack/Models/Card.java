@@ -1,7 +1,5 @@
 package edu.towson.cdough11.finalproject_blackjack.Models;
 
-import android.graphics.drawable.Drawable;
-
 /**
  * Created by Sips Tea on 10/22/2017.
  */
@@ -12,11 +10,12 @@ public class Card {
 
     private String rank;
 
-    private Drawable image;
+    private int imageID;
 
-    public Card(String rank, String suit){
+    public Card(String rank, String suit, int imageID){
         this.rank = rank;
         this.suit = suit;
+        this.imageID = imageID;
     }
 
     public String getSuit() {
@@ -35,6 +34,8 @@ public class Card {
         this.rank = rank;
     }
 
-
+    public int getImageID() {
+        return imageID;
+    }
 
 }
