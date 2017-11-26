@@ -16,7 +16,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static edu.towson.cdough11.finalproject_blackjack.R.id.action_menu_presenter;
-import static edu.towson.cdough11.finalproject_blackjack.R.id.betAmounts;
+//import static edu.towson.cdough11.finalproject_blackjack.R.id.betAmounts;
 import static edu.towson.cdough11.finalproject_blackjack.R.id.dealCardsButton;
 import static edu.towson.cdough11.finalproject_blackjack.R.id.hit;
 import static edu.towson.cdough11.finalproject_blackjack.R.id.recyclerView;
@@ -72,8 +72,8 @@ public class ExampleInstrumentedTest {
         onView(withId(recyclerView)).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void BetAmountsDisplayed(){
-        onView(withId(betAmounts)).check(matches(isDisplayed()));
-    }
+   // @Test
+    //public void BetAmountsDisplayed(){
+    //    onView(withId(betAmounts)).check(matches(isDisplayed()));
+    //}
 }
