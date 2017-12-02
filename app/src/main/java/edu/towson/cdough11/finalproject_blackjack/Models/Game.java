@@ -1,6 +1,11 @@
 package edu.towson.cdough11.finalproject_blackjack.Models;
 
+import android.os.AsyncTask;
+
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import edu.towson.cdough11.finalproject_blackjack.IPresenter;
 
@@ -46,6 +51,8 @@ public class Game implements IModel {
 
     @Override
     public void dealerWin(boolean blackjack) {
+        if(blackjack)
+            presenter.showWhoWon(21, true);
 
     }
 
@@ -61,13 +68,49 @@ public class Game implements IModel {
     }
 
     @Override
+    public void processDealerHand() {
+        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                presenter.showWhoWon(dealerStay(), false);
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                while(!dealer.hasStayed() && !dealer.busted()){
+                    dealer.hit(deck.draw());
+                    publishProgress();
+                    try {
+                        Thread.sleep(1000);
+                    }
+                    catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+                publishProgress();
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+                presenter.refresh();
+            }
+        };
+        task.execute();
+    }
+
+    @Override
     public void dealerHit() {
         dealer.hit(deck.draw());
+        if(dealer.busted())
+            dealerBust();
     }
 
     @Override
     public int dealerStay() {
-        return 0;
+        dealer.stay();
+        return dealer.getFinalSum();
     }
 
     @Override

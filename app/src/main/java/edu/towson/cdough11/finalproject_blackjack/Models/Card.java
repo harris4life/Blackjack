@@ -1,5 +1,7 @@
 package edu.towson.cdough11.finalproject_blackjack.Models;
 
+import edu.towson.cdough11.finalproject_blackjack.R;
+
 /**
  * Created by Sips Tea on 10/22/2017.
  */
@@ -12,12 +14,15 @@ public class Card {
 
     private int imageID;
 
+    private int previousImageID;
 
+    public static final int CARD_BACK_ID = R.drawable.deck2;
 
     public Card(String rank, String suit, int imageID){
         this.rank = rank;
         this.suit = suit;
         this.imageID = imageID;
+        previousImageID = imageID;
     }
 
     public String getSuit() {
@@ -40,4 +45,12 @@ public class Card {
         return imageID;
     }
 
+    public void showCardBack(){
+        previousImageID = imageID;
+        imageID = CARD_BACK_ID;
+    }
+
+    public void revealCard(){
+        imageID = previousImageID;
+    }
 }

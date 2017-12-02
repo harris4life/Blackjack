@@ -56,4 +56,23 @@ public class MainPresenter implements IPresenter {
         if(viewRef != null)
             viewRef.showFinalSum(sum, blackjack);
     }
+
+    @Override
+    public void showWhoWon(int sum, boolean dealerBlackjack) {
+        IView viewRef = view.get();
+        if(viewRef != null)
+            viewRef.showWhoWon(sum, dealerBlackjack);
+    }
+
+    @Override
+    public void processDealerHand() {
+        model.processDealerHand();
+    }
+
+    @Override
+    public void refresh() {
+        IView viewRef = view.get();
+        if(viewRef != null)
+            viewRef.refresh();
+    }
 }

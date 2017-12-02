@@ -16,5 +16,7 @@ public interface IPresenter {
     void hit();;
     void stay();
     void showFinalSum(int sum, boolean blackjack);
-
+    void showWhoWon(int dealerSum, boolean dealerBlackjack);
+    void processDealerHand();
+    void refresh();
 }

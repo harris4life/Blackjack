@@ -25,10 +25,11 @@ public class Dealer implements IParticipant {
     @Override
     public void hit(Card card) {
         draw(card);
-        if(getHandSum() == 21)
-            stay();
-        else if(getHandSum() > 21)
+        int handSum = getHandSum();
+        if(handSum > 21 || handSum == -1)
             bust();
+        else if(handSum >= 17)
+            stay();
     }
 
     @Override
@@ -119,10 +120,10 @@ public class Dealer implements IParticipant {
 
     @Override
     public boolean hasStayed() {
-        return false;
+        return stay;
     }
 
-    public boolean setCardVisibility(boolean visible){
+    public void setCardVisibility(boolean visible){
         cardsVisible = visible;
     }
 }
