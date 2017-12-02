@@ -19,7 +19,7 @@ public class SetBetActivity extends AppCompatActivity {
     Button dealCardsButton;
     TextView betAmountTV;
     private static final int START_GAME_REQUEST_CODE = 2;
-    int betAmount;
+    public static int betAmount;
 
 
     @Override
@@ -83,4 +83,7 @@ public class SetBetActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public static int getBetAmount(){
+        return betAmount;
+    }
 }
