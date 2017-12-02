@@ -121,4 +121,8 @@ public class Dealer implements IParticipant {
     public boolean hasStayed() {
         return false;
     }
+
+    public boolean setCardVisibility(boolean visible){
+        cardsVisible = visible;
+    }
 }

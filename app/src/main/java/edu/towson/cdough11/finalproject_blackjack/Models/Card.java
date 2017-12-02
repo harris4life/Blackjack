@@ -12,6 +12,8 @@ public class Card {
 
     private int imageID;
 
+
+
     public Card(String rank, String suit, int imageID){
         this.rank = rank;
         this.suit = suit;
