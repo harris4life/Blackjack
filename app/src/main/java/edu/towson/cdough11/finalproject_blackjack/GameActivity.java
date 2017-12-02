@@ -17,7 +17,9 @@ import edu.towson.cdough11.finalproject_blackjack.Models.Game;
 public class GameActivity extends AppCompatActivity implements IView, View.OnClickListener {
 
     RecyclerView recyclerview;
+    RecyclerView dealerRecyclerView;
     CardsAdapter adapter;
+    DealerAdapter dealerAdapter;
     IPresenter presenter;
     Button hit;
     Button stay;
@@ -37,9 +39,14 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     private void bindView() {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager dealerLayoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerview = (RecyclerView)findViewById(R.id.recyclerView);
         recyclerview.setAdapter(adapter);
         recyclerview.setLayoutManager(layoutManager);
+        dealerRecyclerView = (RecyclerView)findViewById(R.id.dealerRecyclerView);
+        dealerRecyclerView.setAdapter(dealerAdapter);
+        dealerRecyclerView.setLayoutManager(dealerLayoutManager);
         hit = (Button)findViewById(R.id.hit);
         stay = (Button)findViewById(R.id.stay);
         hit.setOnClickListener(this);
