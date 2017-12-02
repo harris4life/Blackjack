@@ -8,5 +8,5 @@ public interface IView {
 
     void refresh();
     void showFinalSum(int sum, boolean blackjack);
-
+    void showWhoWon(int sum, boolean blackjack);
 }

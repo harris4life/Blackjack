@@ -15,6 +15,7 @@ public interface IModel {
     public void dealerWin(boolean blackjack);
     public void playerWin(boolean blackjack);
     public void push();
+    public void processDealerHand();
     public void dealerHit();
     public int dealerStay();
     public void dealerBust();

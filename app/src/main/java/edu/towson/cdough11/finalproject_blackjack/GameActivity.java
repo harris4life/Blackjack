@@ -19,21 +19,23 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     RecyclerView recyclerview;
     RecyclerView dealerRecyclerView;
     CardsAdapter adapter;
-    DealerAdapter dealerAdapter;
+    CardsAdapter dealerAdapter;
     IPresenter presenter;
     Button hit;
     Button stay;
     TextView handResult;
+    int playerSum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new MainPresenter(this, new Game());
         setContentView(R.layout.activity_game);
-        presenter.dealCards();
         adapter = new CardsAdapter(presenter.getPlayerHand());
+        dealerAdapter = new CardsAdapter(presenter.getDealerHand());
         bindView();
-        refresh();
+        presenter.dealCards();
+        dealerAdapter.hideCardValues();
     }
 
     private void bindView() {
@@ -56,20 +58,46 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
 
     public void refresh(){
         adapter.notifyDataSetChanged();
-        return;
+        dealerAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showFinalSum(int sum, boolean blackjack) {
+        playerSum = sum;
         hit.setVisibility(View.GONE);
         stay.setVisibility(View.GONE);
         if(sum > 21)
             handResult.setText("BUST!");
         else if(blackjack)
-            handResult.setText("BLACKJACK!");
+            handResult.setText("BLACKJACK! You won $X");
         else
             handResult.setText("Hand value: " + sum);
         handResult.setVisibility(View.VISIBLE);
+        dealerAdapter.showCardValues();
+        if(!blackjack)
+            presenter.processDealerHand();
+    }
+
+    @Override
+    public void showWhoWon(int dealerSum, boolean dealerBlackjack) {
+        if(dealerBlackjack){
+            handResult.setText("Dealer BlackJack. You lost $X");
+        }
+        else if(playerSum > 21){
+            handResult.setText("BUST! You lost $X.");
+        }
+        else if(dealerSum > 21){
+            handResult.setText("DEALER BUST! You won $X");
+        }
+        else if(dealerSum > playerSum){
+            handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", you lose $X");
+        }
+        else if (playerSum > dealerSum){
+            handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", you win $X");
+        }
+        else {
+            handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", push.");
+        }
     }
 
     @Override
@@ -83,5 +111,7 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
                 break;
         }
     }
+
+
 }
 

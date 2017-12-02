@@ -39,4 +39,18 @@ import edu.towson.cdough11.finalproject_blackjack.Models.Card;
         public int getItemCount() {
             return cards.size();
         }
+
+        public void hideCardValues(){
+            for(Card card : cards){
+                card.showCardBack();
+            }
+            notifyDataSetChanged();
+        }
+
+        public void showCardValues(){
+            for(Card card: cards){
+                card.revealCard();
+            }
+            notifyDataSetChanged();
+        }
     }
