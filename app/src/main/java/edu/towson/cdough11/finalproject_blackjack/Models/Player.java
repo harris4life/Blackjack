@@ -24,7 +24,7 @@ public class Player implements IParticipant {
         int sum = getHandSum();
         if(getHandSum() == 21)
             stay();
-        else if(getHandSum() > 21 || getHandSum() == -1)
+        else if(getHandSum() > 21)
             bust();
     }
 

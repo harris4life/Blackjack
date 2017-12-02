@@ -26,7 +26,7 @@ public class Dealer implements IParticipant {
     public void hit(Card card) {
         draw(card);
         int handSum = getHandSum();
-        if(handSum > 21 || handSum == -1)
+        if(handSum > 21)
             bust();
         else if(handSum >= 17)
             stay();
@@ -86,7 +86,19 @@ public class Dealer implements IParticipant {
             possibleSums.add(sumOfConstants + 44);
         }
 
-        return getClosestSumTo21(possibleSums);
+        boolean allGreaterThan21 = true;
+        boolean has21 = false;
+        for(Integer i: possibleSums){
+            if(i < 21)
+                allGreaterThan21 = false;
+            if(i == 21)
+                return 21;
+        }
+
+        if(allGreaterThan21)
+            return possibleSums.get(0);
+        else
+            return getClosestSumTo21(possibleSums);
     }
 
     @Override
