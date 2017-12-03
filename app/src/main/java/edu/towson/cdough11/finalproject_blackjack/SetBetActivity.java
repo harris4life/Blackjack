@@ -9,8 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import edu.towson.cdough11.finalproject_blackjack.database.ProfileDataSource;
+import edu.towson.cdough11.finalproject_blackjack.services.IntentService;
 
-public class SetBetActivity extends AppCompatActivity {
+public class SetBetActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button bet$1;
     Button bet$5;
@@ -19,6 +20,7 @@ public class SetBetActivity extends AppCompatActivity {
     Button bet$50;
     Button bet$100;
     Button dealCardsButton;
+    Button homeBtn;
     TextView betAmountTV;
     TextView currentMoney;
     private static final int START_GAME_REQUEST_CODE = 2;
@@ -65,6 +67,8 @@ public class SetBetActivity extends AppCompatActivity {
         else
             bet$100.setVisibility(View.VISIBLE);
         betAmountTV = (TextView) findViewById(R.id.betAmountTV);
+        homeBtn = (Button)findViewById(R.id.homeBtn);
+        homeBtn.setOnClickListener(this);
         dealCardsButton = (Button)findViewById(R.id.dealCardsButton);
         currentMoney = (TextView)findViewById(R.id.currentMoney);
         currentMoney.setText("$" + availableMoney);
@@ -105,7 +109,14 @@ public class SetBetActivity extends AppCompatActivity {
                 betAmount = 100;
                 betAmountTV.setText("$" + Integer.toString(betAmount));
                 break;
+            case R.id.homeBtn:
+                launchMainActivity();
         }
+    }
+
+    private void launchMainActivity() {
+        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        startActivity(intent);
     }
 
 
