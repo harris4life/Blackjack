@@ -1,5 +1,6 @@
 package edu.towson.cdough11.finalproject_blackjack;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import edu.towson.cdough11.finalproject_blackjack.Models.Card;
 import edu.towson.cdough11.finalproject_blackjack.Models.Game;
+import edu.towson.cdough11.finalproject_blackjack.services.IntentService;
 
 public class GameActivity extends AppCompatActivity implements IView, View.OnClickListener {
 
@@ -21,10 +23,12 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     CardsAdapter adapter;
     CardsAdapter dealerAdapter;
     IPresenter presenter;
+    IntentService service;
     Button hit;
     Button stay;
     TextView handResult;
     int playerSum;
+    int bet = SetBetActivity.getBetAmount();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +72,10 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
         stay.setVisibility(View.GONE);
         if(sum > 21)
             handResult.setText("BUST!");
-        else if(blackjack)
-            handResult.setText("BLACKJACK! You won $X");
+        else if(blackjack) {
+            handResult.setText("BLACKJACK! You won $" + bet * 2);
+            service.setResult("win");
+        }
         else
             handResult.setText("Hand value: " + sum);
         handResult.setVisibility(View.VISIBLE);
@@ -81,23 +87,25 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     @Override
     public void showWhoWon(int dealerSum, boolean dealerBlackjack) {
         if(dealerBlackjack){
-            handResult.setText("Dealer BlackJack. You lost $X");
+            handResult.setText("Dealer BlackJack. You lost $" + bet*2);
         }
         else if(playerSum > 21){
-            handResult.setText("BUST! You lost $X.");
+            handResult.setText("BUST! You lost $" + bet);
         }
         else if(dealerSum > 21){
-            handResult.setText("DEALER BUST! You won $X");
+            handResult.setText("DEALER BUST! You won $" + bet);
+            service.setResult("win");
         }
         else if(dealerSum > playerSum){
-            handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", you lose $X");
+            handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", you lose $" + bet);
         }
         else if (playerSum > dealerSum){
-            handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", you win $X");
+            handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", you win $" + bet);
         }
         else {
             handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", push.");
         }
+        startService(new Intent(this, IntentService.class));
     }
 
     @Override

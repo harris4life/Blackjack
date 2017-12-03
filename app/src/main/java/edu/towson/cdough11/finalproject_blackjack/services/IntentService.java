@@ -21,6 +21,7 @@ import edu.towson.cdough11.finalproject_blackjack.SetBetActivity;
 public class IntentService extends android.app.IntentService {
 
     int bet = SetBetActivity.getBetAmount();
+    String player_won;
 
     public IntentService() {
         super("Intent Service");
@@ -28,16 +29,22 @@ public class IntentService extends android.app.IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(android.R.drawable.btn_star);
-        builder.setContentText("You won! You earned $" + bet);
-        builder.setContentTitle("Congratulations");
-        Intent activityIntent = new Intent(this, SetBetActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
-        Notification notification = builder.build();
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        NotificationManagerCompat.from(this).notify(1, notification);
+        if(player_won == "win") {
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            builder.setSmallIcon(android.R.drawable.btn_star);
+            builder.setContentText("You won! You earned $" + bet);
+            builder.setContentTitle("Congratulations");
+            Intent activityIntent = new Intent(this, SetBetActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
+            Notification notification = builder.build();
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            NotificationManagerCompat.from(this).notify(1, notification);
+        }
+    }
+
+    public void setResult(String result){
+        player_won = result;
     }
 }
 //Todo - add boolean won field to Game and set to true when player wins
