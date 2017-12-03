@@ -42,7 +42,8 @@ import edu.towson.cdough11.finalproject_blackjack.Models.Card;
 
         public void hideCardValues(){
             for(Card card : cards){
-                card.showCardBack();
+                if(cards.indexOf(card) != 2)
+                    card.showCardBack();
             }
             notifyDataSetChanged();
         }

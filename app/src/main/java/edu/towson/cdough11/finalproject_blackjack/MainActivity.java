@@ -7,25 +7,32 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import edu.towson.cdough11.finalproject_blackjack.database.ProfileDataSource;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int START_GAME_REQUEST_CODE = 2;
     private static final int DISPLAY_RULES_REQUEST_CODE = 3;
     Button startBtn;
     Button howToPlayBtn;
+    Button resetProfile;
+    ProfileDataSource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dataSource = ProfileDataSource.getInstance(this);
         bindView();
     }
 
     public void bindView(){
         startBtn = (Button)findViewById(R.id.startBtn);
         howToPlayBtn = (Button)findViewById(R.id.rules);
+        resetProfile = (Button)findViewById(R.id.resetProfile);
         startBtn.setOnClickListener(this);
         howToPlayBtn.setOnClickListener(this);
+        resetProfile.setOnClickListener(this);
     }
 
     @Override
@@ -37,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.rules:
                 launchDisplayRulesActivity();
                 break;
+            case R.id.resetProfile:
+                dataSource.resetProfile();
         }
     }
 

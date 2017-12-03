@@ -8,10 +8,7 @@ import java.util.List;
 
 public interface DataSource {
 
-    List<Profile> getAllProfiles();
-    Profile getProfile(String name);
-    void deleteProfile(Profile profile);
-    void addProfile(Profile profile);
-    void updateProfile(Profile originalProfile, Profile profile);
-
+    int getMoney();
+    void updateMoney(int money);
+    void resetProfile();
 }

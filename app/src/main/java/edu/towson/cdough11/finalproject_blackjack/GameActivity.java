@@ -14,6 +14,7 @@ import java.util.List;
 
 import edu.towson.cdough11.finalproject_blackjack.Models.Card;
 import edu.towson.cdough11.finalproject_blackjack.Models.Game;
+import edu.towson.cdough11.finalproject_blackjack.database.ProfileDataSource;
 import edu.towson.cdough11.finalproject_blackjack.services.IntentService;
 
 public class GameActivity extends AppCompatActivity implements IView, View.OnClickListener {
@@ -28,11 +29,18 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     Button stay;
     TextView handResult;
     int playerSum;
-    int bet = SetBetActivity.getBetAmount();
+    int bet;
+    ProfileDataSource dataSource;
+    int currentMoney;
+    TextView currentMoneyText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent betIntent = getIntent();
+        dataSource = ProfileDataSource.getInstance(this);
+        currentMoney = dataSource.getMoney();
+        bet = betIntent.getIntExtra("Bet Amount", 1);
         presenter = new MainPresenter(this, new Game());
         setContentView(R.layout.activity_game);
         adapter = new CardsAdapter(presenter.getPlayerHand());
@@ -58,6 +66,8 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
         hit.setOnClickListener(this);
         stay.setOnClickListener(this);
         handResult = (TextView)findViewById(R.id.handResult);
+        currentMoneyText = (TextView)findViewById(R.id.gameCurrentMoney);
+        currentMoneyText.setText("Current Money: $" + dataSource.getMoney());
     }
 
     public void refresh(){
@@ -88,23 +98,32 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     public void showWhoWon(int dealerSum, boolean dealerBlackjack) {
         if(dealerBlackjack){
             handResult.setText("Dealer BlackJack. You lost $" + bet*2);
+            if(!(bet * 2 > currentMoney))
+                dataSource.updateMoney(currentMoney - (bet * 2));
+            else
+                dataSource.updateMoney(0);
         }
         else if(playerSum > 21){
             handResult.setText("BUST! You lost $" + bet);
+            dataSource.updateMoney(currentMoney - bet);
         }
         else if(dealerSum > 21){
             handResult.setText("DEALER BUST! You won $" + bet);
+            dataSource.updateMoney(currentMoney + bet);
             service.setResult("win");
         }
         else if(dealerSum > playerSum){
             handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", you lose $" + bet);
+            dataSource.updateMoney(currentMoney - bet);
         }
         else if (playerSum > dealerSum){
             handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", you win $" + bet);
+            dataSource.updateMoney(currentMoney + bet);
         }
         else {
             handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", push.");
         }
+        currentMoneyText.setText("Current Money: $" + dataSource.getMoney());
         startService(new Intent(this, IntentService.class));
     }
 

@@ -77,14 +77,17 @@ public class Game implements IModel {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                while(!dealer.hasStayed() && !dealer.busted()){
-                    dealer.hit(deck.draw());
-                    publishProgress();
-                    try {
-                        Thread.sleep(1000);
-                    }
-                    catch(InterruptedException e){
-                        e.printStackTrace();
+                if(dealer.getHandSum() >= 17)
+                    dealer.stay();
+                else {
+                    while (!dealer.hasStayed() && !dealer.busted()) {
+                        dealer.hit(deck.draw());
+                        publishProgress();
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 publishProgress();
