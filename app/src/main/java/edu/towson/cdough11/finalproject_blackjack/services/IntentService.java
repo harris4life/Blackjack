@@ -21,7 +21,7 @@ import edu.towson.cdough11.finalproject_blackjack.SetBetActivity;
 public class IntentService extends android.app.IntentService {
 
     int bet = SetBetActivity.getBetAmount();
-    String player_won;
+    String result;
 
     public IntentService() {
         super("Intent Service");
@@ -29,7 +29,8 @@ public class IntentService extends android.app.IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if(player_won == "win") {
+        result = intent.getStringExtra("result");
+        if(result.equals("won")) {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
             builder.setSmallIcon(android.R.drawable.btn_star);
             builder.setContentText("You won! You earned $" + bet);
@@ -40,18 +41,28 @@ public class IntentService extends android.app.IntentService {
             Notification notification = builder.build();
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
             NotificationManagerCompat.from(this).notify(1, notification);
+        }else if(result.equals("lose")){
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            builder.setSmallIcon(android.R.drawable.btn_star);
+            builder.setContentText("Sorry, you lost. You lost $" + bet);
+            builder.setContentTitle("Uh Oh!");
+            Intent activityIntent = new Intent(this, SetBetActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
+            Notification notification = builder.build();
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            NotificationManagerCompat.from(this).notify(1, notification);
+        }else{
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            builder.setSmallIcon(android.R.drawable.btn_star);
+            builder.setContentText("You pushed with the dealer. Bet amount returned");
+            builder.setContentTitle("Play again?");
+            Intent activityIntent = new Intent(this, SetBetActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
+            Notification notification = builder.build();
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            NotificationManagerCompat.from(this).notify(1, notification);
         }
     }
-
-    public void setResult(String result){
-        player_won = result;
-    }
 }
-//Todo - add boolean won field to Game and set to true when player wins
-//public boolean won = false
-//won = true; under playerWin()
-
-//Todo- add to GameActivity under stay button click //Todo - make active after dealer details added
-//if(game.won)
-//startService(new Intent(this, IntentService.class));
-//Game game;

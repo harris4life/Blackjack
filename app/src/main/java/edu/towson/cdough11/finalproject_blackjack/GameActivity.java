@@ -23,7 +23,7 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     CardsAdapter adapter;
     CardsAdapter dealerAdapter;
     IPresenter presenter;
-    IntentService service;
+    String gameResult;
     Button hit;
     Button stay;
     TextView handResult;
@@ -74,7 +74,7 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
             handResult.setText("BUST!");
         else if(blackjack) {
             handResult.setText("BLACKJACK! You won $" + bet * 2);
-            service.setResult("win");
+            gameResult = "won";
         }
         else
             handResult.setText("Hand value: " + sum);
@@ -88,24 +88,31 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     public void showWhoWon(int dealerSum, boolean dealerBlackjack) {
         if(dealerBlackjack){
             handResult.setText("Dealer BlackJack. You lost $" + bet*2);
+            gameResult = "lose";
         }
         else if(playerSum > 21){
             handResult.setText("BUST! You lost $" + bet);
+            gameResult = "lose";
         }
         else if(dealerSum > 21){
             handResult.setText("DEALER BUST! You won $" + bet);
-            service.setResult("win");
+            gameResult = "won";
         }
         else if(dealerSum > playerSum){
             handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", you lose $" + bet);
+            gameResult = "lose";
         }
         else if (playerSum > dealerSum){
             handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", you win $" + bet);
+            gameResult = "won";
         }
         else {
             handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", push.");
+            gameResult = "push";
         }
-        startService(new Intent(this, IntentService.class));
+        Intent intent = new Intent(this, IntentService.class);
+        intent.putExtra("result", gameResult);
+        startService(intent);
     }
 
     @Override
