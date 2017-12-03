@@ -134,7 +134,6 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
         intent.putExtra("result", gameResult);
         startService(intent);
         currentMoneyText.setText("Current Money: $" + dataSource.getMoney());
-        startService(new Intent(this, IntentService.class));
     }
 
     @Override
