@@ -15,7 +15,6 @@ public class ProfileDBHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE = "CREATE TABLE " + DatabaseContract.PLAYER_TABLE_NAME + " (" +
             DatabaseContract._ID + "INTEGER PRIMARY KEY, " +
-            DatabaseContract.PLAYER_NAME_COLUMN_NAME + " TEXT, " +
             DatabaseContract.MONEY_COLUMN_NAME + " INTEGER);";
 
     public ProfileDBHelper(Context context) {
@@ -25,10 +24,17 @@ public class ProfileDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_TABLE);
+        addProfile(sqLiteDatabase, 500);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+    }
+
+    private void addProfile(SQLiteDatabase db, int money){
+        db.execSQL("INSERT INTO " + DatabaseContract.PLAYER_TABLE_NAME + " " +
+                "VALUES(1, " + money + ");");
     }
 }

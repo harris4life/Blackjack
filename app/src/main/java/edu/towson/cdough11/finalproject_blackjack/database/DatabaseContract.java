@@ -10,5 +10,4 @@ public class DatabaseContract implements BaseColumns {
 
     public static final String PLAYER_TABLE_NAME = "Player";
     public static final String MONEY_COLUMN_NAME = "Money";
-    public static final String PLAYER_NAME_COLUMN_NAME = "Name";
 }
