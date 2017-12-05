@@ -87,11 +87,10 @@ public class Dealer implements IParticipant {
         }
 
         boolean allGreaterThan21 = true;
-        boolean has21 = false;
         for(Integer i: possibleSums){
-            if(i < 21)
+            if(i <= 21)
                 allGreaterThan21 = false;
-            if(i == 21)
+            else if(i == 21)
                 return 21;
         }
 

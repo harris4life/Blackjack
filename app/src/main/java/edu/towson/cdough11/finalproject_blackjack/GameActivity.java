@@ -33,6 +33,7 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     ProfileDataSource dataSource;
     int currentMoney;
     TextView currentMoneyText;
+    boolean handPlayed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
         bindView();
         presenter.dealCards();
         dealerAdapter.hideCardValues();
+        handPlayed = false;
     }
 
     private void bindView() {
@@ -86,6 +88,7 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
             handResult.setText("BLACKJACK! You won $" + bet * 2);
             dataSource.updateMoney(currentMoney + (2 *bet));
             gameResult = "won";
+            handPlayed = true;
         }
         else
             handResult.setText("Hand value: " + sum);
@@ -96,8 +99,19 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     }
 
     @Override
+    public void showFinalSum(int sum) {
+        playerSum = sum;
+        hit.setVisibility(View.GONE);
+        stay.setVisibility(View.GONE);
+        handResult.setText("Hand value: " + sum);
+        handResult.setVisibility(View.VISIBLE);
+        dealerAdapter.showCardValues();
+    }
+
+    @Override
     public void showWhoWon(int dealerSum, boolean dealerBlackjack) {
         if(dealerBlackjack){
+            refresh();
             handResult.setText("Dealer BlackJack. You lost $" + bet*2);
             gameResult = "lose";
             if(!(bet * 2 > currentMoney))
@@ -127,13 +141,14 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
 
         }
         else {
-            handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", push.");
-            gameResult = "push";
+            handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", pushOnDoubleBlackjack.");
+            gameResult = "pushOnDoubleBlackjack";
         }
         Intent intent = new Intent(this, IntentService.class);
         intent.putExtra("result", gameResult);
         startService(intent);
         currentMoneyText.setText("Current Money: $" + dataSource.getMoney());
+        handPlayed = true;
     }
 
     @Override
@@ -148,6 +163,11 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if(!handPlayed)
+            dataSource.updateMoney(currentMoney - bet);
+        super.onBackPressed();
+    }
 }
 

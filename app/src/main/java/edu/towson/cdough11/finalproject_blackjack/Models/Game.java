@@ -3,9 +3,6 @@ package edu.towson.cdough11.finalproject_blackjack.Models;
 import android.os.AsyncTask;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import edu.towson.cdough11.finalproject_blackjack.IPresenter;
 
@@ -34,10 +31,13 @@ public class Game implements IModel {
         dealer.draw(deck.draw());
         player.draw(deck.draw());
         dealer.draw(deck.draw());
+        List<Card> dealerHand = getDealerHand();
+        //dealerHand.get(0).setRank("10");
+        //dealerHand.get(1).setRank("A");
         boolean playerBlackjack = player.checkBlackjack();
         boolean dealerBlackjack = dealer.checkBlackjack();
         if(playerBlackjack && dealerBlackjack)
-            push();
+            pushOnDoubleBlackjack();
         else if (playerBlackjack)
             playerWin(true);
         else if (dealerBlackjack)
@@ -51,8 +51,10 @@ public class Game implements IModel {
 
     @Override
     public void dealerWin(boolean blackjack) {
-        if(blackjack)
+        if(blackjack) {
+            presenter.showFinalSum(player.getHandSum());
             presenter.showWhoWon(21, true);
+        }
 
     }
 
@@ -63,8 +65,9 @@ public class Game implements IModel {
     }
 
     @Override
-    public void push() {
-
+    public void pushOnDoubleBlackjack() {
+        player.stay();
+        processDealerHand();
     }
 
     @Override
