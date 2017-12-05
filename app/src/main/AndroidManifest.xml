@@ -11,19 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SetBetActivity" />
-        <activity android:name=".GameActivity" />
+        <activity android:name=".SetBetActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".GameActivity" android:screenOrientation="portrait"/>
 
         <service android:name=".services.IntentService" />
 
-        <activity android:name=".RulesActivity"></activity>
+        <activity android:name=".RulesActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
