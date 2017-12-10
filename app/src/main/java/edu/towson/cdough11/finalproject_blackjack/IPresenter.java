@@ -13,6 +13,7 @@ public interface IPresenter {
     void dealCards();
     List<Card> getPlayerHand();
     List<Card> getDealerHand();
+    public int getPlayerHandSum();
     void hit();;
     void stay();
     void showFinalSum(int sum, boolean blackjack);

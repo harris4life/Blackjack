@@ -149,6 +149,11 @@ public class Game implements IModel {
     }
 
     @Override
+    public int getPlayerHandSum(){
+        return player.getHandSum();
+    }
+
+    @Override
     public List<Card> getDealerHand() {
         return dealer.hand;
     }

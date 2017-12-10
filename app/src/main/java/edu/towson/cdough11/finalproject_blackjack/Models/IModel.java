@@ -22,6 +22,7 @@ public interface IModel {
     public void playerHit();
     public int playerStay();
     public void playerBust();
+    public int getPlayerHandSum();
     List<Card> getPlayerHand();
     List<Card> getDealerHand();
     public void setPresenter(IPresenter presenter);

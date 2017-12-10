@@ -27,6 +27,7 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     String gameResult;
     Button hit;
     Button stay;
+    TextView playerHandSum;
     TextView handResult;
     int playerSum;
     int bet;
@@ -69,8 +70,11 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
         stay.setOnClickListener(this);
         handResult = (TextView)findViewById(R.id.handResult);
         currentMoneyText = (TextView)findViewById(R.id.gameCurrentMoney);
+        playerHandSum = (TextView)findViewById(R.id.playerHandSumTV);
         currentMoneyText.setText("Current Money: $" + dataSource.getMoney());
     }
+
+
 
     public void refresh(){
         adapter.notifyDataSetChanged();
@@ -162,6 +166,12 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
                 break;
         }
     }
+
+    @Override
+    public void updatePlayerHandSum(int sum){
+        playerHandSum.setText(Integer.toString(sum));
+    }
+
 
     @Override
     public void onBackPressed() {
