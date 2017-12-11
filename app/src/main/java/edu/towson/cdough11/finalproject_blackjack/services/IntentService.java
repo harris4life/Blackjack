@@ -52,7 +52,20 @@ public class IntentService extends android.app.IntentService {
             Notification notification = builder.build();
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
             NotificationManagerCompat.from(this).notify(1, notification);
-        }else{
+        }
+        else if(result.equals("loseOnBlackJack")){
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            builder.setSmallIcon(android.R.drawable.btn_star);
+            builder.setContentText("Sorry, the dealer had Blackjack! You lost $" + bet *2);
+            builder.setContentTitle("Uh Oh!");
+            Intent activityIntent = new Intent(this, SetBetActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
+            Notification notification = builder.build();
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            NotificationManagerCompat.from(this).notify(1, notification);
+        }
+        else{
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
             builder.setSmallIcon(android.R.drawable.btn_star);
             builder.setContentText("You pushed with the dealer. Bet amount returned");

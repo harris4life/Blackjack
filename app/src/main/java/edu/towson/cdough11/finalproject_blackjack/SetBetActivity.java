@@ -31,6 +31,7 @@ public class SetBetActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_bet);
+        bindView();
         betAmount = 0;
     }
 
@@ -77,7 +78,33 @@ public class SetBetActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        bindView();
+        int availableMoney = dataSource.getMoney();
+        currentMoney.setText("$" + availableMoney);
+        if(availableMoney < 1)
+            bet$1.setVisibility(View.GONE);
+        else
+            bet$1.setVisibility(View.VISIBLE);
+        if(availableMoney < 5)
+            bet$5.setVisibility(View.GONE);
+        else
+            bet$5.setVisibility(View.VISIBLE);
+        if(availableMoney < 10)
+            bet$10.setVisibility(View.GONE);
+        else
+            bet$10.setVisibility(View.VISIBLE);
+        if(availableMoney < 25)
+            bet$25.setVisibility(View.GONE);
+        else
+            bet$25.setVisibility(View.VISIBLE);
+        if(availableMoney < 50)
+            bet$50.setVisibility(View.GONE);
+        else
+            bet$50.setVisibility(View.VISIBLE);
+        if(availableMoney < 100)
+            bet$100.setVisibility(View.GONE);
+        else
+            bet$100.setVisibility(View.VISIBLE);
+
     }
 
     public void onClick(View v) {

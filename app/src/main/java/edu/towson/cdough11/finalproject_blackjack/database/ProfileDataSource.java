@@ -19,8 +19,7 @@ public class ProfileDataSource implements DataSource{
     private ProfileDBHelper dbHelper;
 
     public static ProfileDataSource getInstance(Context ctx) {
-        if(ourInstance == null)
-            ourInstance = new ProfileDataSource(ctx);
+        ourInstance = new ProfileDataSource(ctx);
         return ourInstance;
     }
 

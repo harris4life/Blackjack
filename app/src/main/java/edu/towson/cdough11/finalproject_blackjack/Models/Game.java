@@ -31,9 +31,6 @@ public class Game implements IModel {
         dealer.draw(deck.draw());
         player.draw(deck.draw());
         dealer.draw(deck.draw());
-        List<Card> dealerHand = getDealerHand();
-        //dealerHand.get(0).setRank("10");
-        //dealerHand.get(1).setRank("A");
         boolean playerBlackjack = player.checkBlackjack();
         boolean dealerBlackjack = dealer.checkBlackjack();
         if(playerBlackjack && dealerBlackjack)

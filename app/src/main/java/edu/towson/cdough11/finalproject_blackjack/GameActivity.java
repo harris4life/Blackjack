@@ -34,10 +34,11 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     ProfileDataSource dataSource;
     int currentMoney;
     TextView currentMoneyText;
-    boolean handPlayed;
+    public static boolean handPlayed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        handPlayed = false;
         super.onCreate(savedInstanceState);
         Intent betIntent = getIntent();
         dataSource = ProfileDataSource.getInstance(this);
@@ -49,8 +50,10 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
         dealerAdapter = new CardsAdapter(presenter.getDealerHand());
         bindView();
         presenter.dealCards();
-        dealerAdapter.hideCardValues();
-        handPlayed = false;
+        if(!handPlayed) {
+            dealerAdapter.hideCardValues();
+            handPlayed = false;
+        }
     }
 
     private void bindView() {
@@ -117,7 +120,7 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
         if(dealerBlackjack){
             refresh();
             handResult.setText("Dealer BlackJack. You lost $" + bet*2);
-            gameResult = "lose";
+            gameResult = "loseOnBlackJack";
             if(!(bet * 2 > currentMoney))
                 dataSource.updateMoney(currentMoney - (bet * 2));
             else
@@ -145,8 +148,8 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
 
         }
         else {
-            handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", pushOnDoubleBlackjack.");
-            gameResult = "pushOnDoubleBlackjack";
+            handResult.setText("Dealer had " + dealerSum + ", you had " + playerSum + ", push.");
+            gameResult = "push";
         }
         Intent intent = new Intent(this, IntentService.class);
         intent.putExtra("result", gameResult);
@@ -177,6 +180,7 @@ public class GameActivity extends AppCompatActivity implements IView, View.OnCli
     public void onBackPressed() {
         if(!handPlayed)
             dataSource.updateMoney(currentMoney - bet);
+        int money = dataSource.getMoney();
         super.onBackPressed();
     }
 }
