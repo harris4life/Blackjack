@@ -59,3 +59,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(intent, START_GAME_REQUEST_CODE);
     }
 }
+
