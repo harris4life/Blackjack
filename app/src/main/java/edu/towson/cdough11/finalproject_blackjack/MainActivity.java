@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import edu.towson.cdough11.finalproject_blackjack.database.ProfileDataSource;
 
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button startBtn;
     Button howToPlayBtn;
     Button resetProfile;
+    Toast toast;
     ProfileDataSource dataSource;
 
     @Override
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.resetProfile:
                 dataSource.resetProfile();
+                toast = Toast.makeText(this.getApplicationContext(), "User Profile Reset!", Toast.LENGTH_LONG);
+                toast.show();
         }
     }
 
