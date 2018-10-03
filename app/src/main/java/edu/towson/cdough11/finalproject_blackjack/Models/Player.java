@@ -85,6 +85,8 @@ public class Player implements IParticipant {
 
         boolean allGreaterThan21 = true;
         boolean has21 = false;
+
+
         for(Integer i: possibleSums){
             if(i < 21)
                 allGreaterThan21 = false;
